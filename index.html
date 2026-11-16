@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pazanda — milliy taomlar restorani</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@700;800&family=Nunito+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#10264a; --tile:#1b8a8f; --saffron:#e9a92b; --pomegranate:#a3243b; --paper:#f6f7fa; --line:#d9deea;
+  --display:'Noto Serif',Georgia,serif; --body:'Nunito Sans',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);color:var(--ink);background:var(--paper);line-height:1.65;font-size:17px}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--saffron);outline-offset:3px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+/* ikat band: the one memorable element */
+.ikat{height:34px;background:
+  linear-gradient(135deg,var(--saffron) 25%,transparent 25%) -17px 0/34px 34px,
+  linear-gradient(225deg,var(--saffron) 25%,transparent 25%) -17px 0/34px 34px,
+  linear-gradient(315deg,var(--pomegranate) 25%,transparent 25%) 0 0/34px 34px,
+  linear-gradient(45deg,var(--pomegranate) 25%,var(--tile) 25%) 0 0/34px 34px;}
+
+header{background:var(--ink);color:#fff}
+.nav{display:flex;justify-content:space-between;align-items:center;padding:18px 24px;max-width:1080px;margin:0 auto;gap:16px;flex-wrap:wrap}
+.logo{font-family:var(--display);font-size:1.7rem;text-decoration:none;color:var(--saffron)}
+nav a{margin-left:22px;text-decoration:none;font-weight:600;font-size:.95rem;opacity:.9}
+nav a:hover{color:var(--saffron)}
+
+.hero{background:var(--ink);color:#fff;padding:56px 0 80px}
+.hero .wrap{display:grid;grid-template-columns:1.2fr .8fr;gap:48px;align-items:center}
+.hero h1{font-family:var(--display);font-weight:800;font-size:clamp(2.2rem,5vw,3.9rem);line-height:1.12;letter-spacing:-.01em;margin-bottom:20px}
+.hero p{max-width:46ch;opacity:.88;margin-bottom:30px}
+.btn{display:inline-block;background:var(--saffron);color:var(--ink);font-weight:800;padding:14px 28px;border-radius:6px;text-decoration:none;border:0;cursor:pointer;font:800 1rem var(--body)}
+.btn:hover{background:#f3bb48}
+.btn.ghost{background:transparent;color:#fff;border:2px solid #ffffff55;margin-left:10px}
+.kazan{aspect-ratio:1;border-radius:50%;background:
+  radial-gradient(circle,var(--ink) 0 22%,transparent 22.5%),
+  repeating-conic-gradient(var(--saffron) 0 15deg,var(--pomegranate) 15deg 30deg,var(--tile) 30deg 45deg);
+  border:10px solid #ffffff18;box-shadow:0 0 0 14px var(--ink),0 0 0 18px var(--saffron);position:relative}
+.kazan span{position:absolute;inset:0;display:grid;place-items:center;text-align:center;font-family:var(--display);font-size:1.25rem;line-height:1.2;padding:30%}
+
+section{padding:76px 0}
+h2{font-family:var(--display);font-weight:800;font-size:clamp(1.9rem,4vw,2.7rem);margin-bottom:12px}
+.sub{max-width:56ch;color:#44547a;margin-bottom:34px}
+
+/* menu */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}
+.tab{background:#fff;border:2px solid var(--line);color:var(--ink);padding:10px 20px;border-radius:999px;font:700 .95rem var(--body);cursor:pointer}
+.tab[aria-selected="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.search{width:100%;max-width:420px;padding:12px 16px;border-radius:999px;border:2px solid var(--line);font:1rem var(--body);margin-bottom:18px;background:#fff;color:var(--ink)}
+.search:focus{border-color:var(--tile)}
+.hit{font-style:normal;font-size:.72rem;font-weight:800;background:var(--saffron);color:var(--ink);border-radius:4px;padding:1px 7px;margin-left:8px;vertical-align:middle}
+.menu{display:grid;grid-template-columns:1fr 1fr;gap:6px 56px;list-style:none}
+.menu li{padding:14px 0;border-bottom:1px solid var(--line)}
+.row{display:flex;align-items:baseline;gap:8px;font-weight:800}
+.row i{flex:1;border-bottom:2px dotted #b7c0d6;transform:translateY(-4px)}
+.row b{color:var(--pomegranate)}
+.menu small{display:block;color:#5b6a8c;font-size:.9rem;font-weight:400}
+
+/* about */
+.about{background:#fff}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:10px}
+.facts div{border-left:5px solid var(--tile);padding-left:18px}
+.facts h3{font-size:1.1rem;margin-bottom:4px}
+
+/* booking */
+.book{background:var(--ink);color:#fff}
+.book .wrap{display:grid;grid-template-columns:1fr 1fr;gap:56px}
+.book .sub{color:#c3cde4}
+form{display:grid;gap:14px}
+label{font-weight:600;font-size:.92rem;display:grid;gap:6px}
+input,select{padding:12px 14px;border-radius:6px;border:2px solid transparent;font:1rem var(--body);background:#fff;color:var(--ink)}
+.ok{display:none;background:var(--tile);padding:14px 18px;border-radius:6px;font-weight:700}
+.hours{list-style:none;margin-top:18px}
+.hours li{display:flex;justify-content:space-between;border-bottom:1px solid #ffffff22;padding:8px 0}
+
+.contact{background:var(--paper)}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{background:#fff;border:2px solid var(--line);border-top:6px solid var(--tile);border-radius:8px;padding:24px}
+.card:nth-child(2){border-top-color:var(--saffron)}
+.card:nth-child(3){border-top-color:var(--pomegranate)}
+.card h3{font-size:1.05rem;margin-bottom:6px}
+.card a,.card p{font-size:1.15rem;font-weight:800;text-decoration:none}
+.card a:hover{color:var(--pomegranate)}
+.card small{display:block;color:#5b6a8c;font-weight:400;font-size:.9rem;margin-top:4px}
+.tel{color:var(--saffron);font-weight:800;text-decoration:none;font-size:.95rem}
+footer{background:#0b1b36;color:#aab6d3;padding:28px 0;font-size:.92rem}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+
+
+.meta{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.add{background:var(--tile);color:#fff;border:0;border-radius:6px;padding:6px 12px;font:700 .85rem var(--body);cursor:pointer;white-space:nowrap}
+.add:hover{background:#157277}
+.cartbtn{position:fixed;right:18px;bottom:18px;z-index:30;background:var(--pomegranate);color:#fff;border:0;border-radius:999px;padding:14px 22px;font:800 1rem var(--body);cursor:pointer;box-shadow:0 6px 20px #10264a55}
+.cartbtn span{background:var(--saffron);color:var(--ink);border-radius:999px;padding:1px 9px;margin-left:8px}
+.scrim{position:fixed;inset:0;background:#0b1b3699;z-index:40;display:none}
+.scrim.open{display:block}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(420px,100%);background:#fff;z-index:50;transform:translateX(100%);visibility:hidden;transition:transform .25s,visibility .25s;overflow-y:auto;padding:22px;display:flex;flex-direction:column;gap:14px}
+.drawer.open{transform:none;visibility:visible}
+.dhead{display:flex;justify-content:space-between;align-items:center}
+.dhead h3{font-family:var(--display);font-size:1.4rem}
+.dhead button{background:none;border:0;font-size:1.4rem;cursor:pointer;color:var(--ink)}
+#clist{list-style:none}
+#clist li{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}
+#clist small{color:#5b6a8c}
+#clist .empty{display:block;color:#5b6a8c}
+.qty{display:flex;align-items:center;gap:8px}
+.qty button{width:30px;height:30px;border-radius:50%;border:2px solid var(--line);background:#fff;font-weight:800;cursor:pointer;color:var(--ink)}
+.dtotal{display:flex;justify-content:space-between;font-size:1.1rem;font-weight:800}
+#order{display:grid;gap:12px}
+#order input,#order select{border-color:var(--line)}
+.msg{display:none;padding:12px 14px;border-radius:6px;font-weight:700}
+.msg.good{display:block;background:#dff3ee;color:#0d5a52}
+.msg.bad{display:block;background:#fbe3e6;color:#7d1a2c}
+[hidden]{display:none!important}
+.cartbox{display:flex;flex-direction:column;gap:14px}
+#status{display:grid;gap:12px;align-content:start}
+#status h4{font-family:var(--display);font-size:1.3rem}
+.btn.light{background:#fff;border:2px solid var(--line);color:var(--ink)}
+.chekwrap{position:fixed;inset:0;z-index:70;background:#0b1b36cc;display:flex;align-items:flex-start;justify-content:center;padding:20px 16px;overflow-y:auto}
+.chek{background:#fff;width:min(380px,100%);border-radius:6px;overflow:hidden;box-shadow:0 10px 40px #0007;color:var(--ink);margin:auto}
+.chek-in{padding:20px 22px 22px}
+.chek-head{text-align:center;display:grid;gap:2px;padding-bottom:12px;border-bottom:2px dashed var(--line)}
+.chek-head b{font-family:var(--display);font-size:1.5rem}
+.chek-head span{font-size:.88rem;color:#5b6a8c}
+.chek-meta{display:grid;gap:3px;padding:12px 0;border-bottom:2px dashed var(--line);font-size:.92rem}
+.chek-meta div{display:flex;justify-content:space-between;gap:12px}
+#chek-rows{width:100%;border-collapse:collapse;font-size:.92rem;margin:10px 0}
+#chek-rows td{padding:5px 0;vertical-align:top}
+#chek-rows td:last-child{text-align:right;white-space:nowrap}
+.chek-total{display:flex;justify-content:space-between;font-size:1.15rem;font-weight:800;border-top:2px dashed var(--line);padding-top:10px}
+.chek-ok{text-align:center;margin-top:14px;font-weight:700;color:var(--tile)}
+.chek-actions{display:flex;gap:10px;margin-top:16px}
+.chek-actions .btn{flex:1;text-align:center;padding:12px 10px}
+@media print{
+  body>*:not(#chekwrap){display:none!important}
+  #chekwrap{position:static!important;background:none!important;display:block!important;padding:0!important}
+  .chek{box-shadow:none!important;margin:0 auto}
+  .noprint{display:none!important}
+}
+@media(max-width:820px){
+  .hero .wrap,.book .wrap,.facts,.menu,.cards{grid-template-columns:1fr}
+  .kazan{max-width:300px}
+  nav a{margin:0 14px 0 0}
+  .btn.ghost{margin:10px 0 0}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <a class="logo" href="#">Pazanda</a>
+    <nav>
+      <a href="#menu">Menyu</a>
+      <a href="#about">Biz haqimizda</a>
+      <a href="#book">Joy band qilish</a>
+      <a href="#aloqa">Aloqa</a>
+      <a class="tel" href="tel:+998943248308">+998 94 324 83 08</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <div>
+      <h1>Kazanda pishgan, dasturxonda sovumaydi</h1>
+      <p>Har kuni ertalab yangi damlangan to'y oshi, tandirdan uzilgan issiq samsa va ko'mir ustida pishgan shashlik. Oila bilan keling, joyingiz tayyor.</p>
+      <a class="btn" href="#book">Joy band qilish</a>
+      <a class="btn ghost" href="#menu">Menyuni ko'rish</a>
+    </div>
+    <div class="kazan" role="img" aria-label="Kazan va ikat naqshi"><span>Har kuni<br>soat 12:00 da<br>osh tayyor</span></div>
+  </div>
+</div>
+<div class="ikat" aria-hidden="true"></div>
+
+<section id="menu">
+  <div class="wrap">
+    <h2>Menyu</h2>
+    <p class="sub"><strong id="total">150</strong> xil taom. Narxlar so'mda ko'rsatilgan, barcha taomlar buyurtma bilan yangi tayyorlanadi.</p>
+    <input class="search" id="q" type="search" placeholder="Taomni qidiring, masalan: osh" aria-label="Menyudan qidirish">
+    <div class="tabs" role="tablist" id="tabs"></div>
+    <ul class="menu" id="menu-list"></ul>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="wrap">
+    <h2>Biz haqimizda</h2>
+    <p class="sub">Pazanda oilaviy restoran. Retseptlarimiz bobolarimizdan qolgan, masalliqlar esa har kuni mahalliy bozordan olinadi.</p>
+    <div class="facts">
+      <div><h3>Yangi masalliq</h3><p>Go'sht, sabzi va guruch har kuni ertalab yangi keltiriladi.</p></div>
+      <div><h3>Katta dasturxon</h3><p>Zalimiz 80 kishigacha, alohida xonalar to'y va tug'ilgan kunlar uchun.</p></div>
+      <div><h3>Yetkazib berish</h3><p>Shahar bo'ylab 45 daqiqada issiq holda yetkazamiz.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="book" id="book">
+  <div class="wrap">
+    <div>
+      <h2>Joy band qilish</h2>
+      <p class="sub">Ma'lumotlaringizni qoldiring, administrator sizga qo'ng'iroq qilib tasdiqlaydi.</p>
+      <ul class="hours">
+        <li><span>Dushanba — Juma</span><span>10:00 – 23:00</span></li>
+        <li><span>Shanba — Yakshanba</span><span>09:00 – 00:00</span></li>
+        <li><span>Telefon</span><a href="tel:+998943248308" style="font-weight:800;text-decoration:none">+998 94 324 83 08</a></li>
+        <li><span>Manzil</span><span>Uchko'prik tumani</span></li>
+      </ul>
+    </div>
+    <form id="bron">
+      <label>Ismingiz<input name="ism" required placeholder="Masalan, Aziz"></label>
+      <label>Telefon raqamingiz<input name="tel" type="tel" required placeholder="+998 __ ___ __ __"></label>
+      <label>Kun<input name="kun" type="date" required></label>
+      <label>Mehmonlar soni
+        <select name="soni"><option>2 kishi</option><option>4 kishi</option><option>6 kishi</option><option>10 kishi</option><option>10 dan ko'p</option></select>
+      </label>
+      <button class="btn" type="submit">Joyni band qilish</button>
+      <div class="msg" id="ok" role="status"></div>
+    </form>
+  </div>
+</section>
+
+<section class="contact" id="aloqa">
+  <div class="wrap">
+    <h2>Aloqa</h2>
+    <p class="sub">Savolingiz bo'lsa yoki joy band qilmoqchi bo'lsangiz, qo'ng'iroq qiling.</p>
+    <div class="cards">
+      <div class="card"><h3>Telefon</h3><a href="tel:+998943248308">+998 94 324 83 08</a><small>Bosib qo'ng'iroq qiling</small></div>
+      <div class="card"><h3>Manzil</h3><p>Farg'ona viloyati, Uchko'prik tumani</p><small>Mehmonlarni kutib qolamiz</small></div>
+      <div class="card"><h3>Ish vaqti</h3><p>Har kuni 10:00 – 23:00</p><small>Hafta oxiri 09:00 dan</small></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Pazanda restorani</span>
+    <span>Farg'ona viloyati, Uchko'prik tumani · +998 94 324 83 08</span>
+  </div>
+</footer>
+
+<button class="cartbtn" id="cartbtn" type="button">Savat <span id="cnt">0</span></button>
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-label="Savat" aria-hidden="true">
+  <div class="dhead"><h3>Buyurtmangiz</h3><button id="dclose" type="button" aria-label="Yopish">✕</button></div>
+  <div id="cartbox" class="cartbox">
+  <ul id="clist"></ul>
+  <div class="dtotal"><span>Jami</span><b id="ctotal">0 so'm</b></div>
+  <form id="order">
+    <label>Ismingiz<input name="ism" required placeholder="Masalan, Aziz"></label>
+    <label>Telefon raqamingiz<input name="tel" type="tel" required placeholder="+998 __ ___ __ __"></label>
+    <label>Qanday olasiz?
+      <select name="tur"><option>Yetkazib berish</option><option>Zalda yeyman</option><option>Olib ketaman</option></select>
+    </label>
+    <label>Manzil yoki stol raqami<input name="manzil" placeholder="Ko'cha, uy yoki stol raqami"></label>
+    <label>Izoh<input name="izoh" placeholder="Masalan, achchiq bo'lmasin"></label>
+    <button class="btn" type="submit">Buyurtma berish</button>
+    <div class="msg" id="omsg" role="status"></div>
+  </form>
+  </div>
+  <div id="status" hidden>
+    <h4 id="st-title"></h4>
+    <p id="st-text"></p>
+    <button class="btn" id="st-receipt" type="button" hidden>Chekni ko'rish</button>
+    <button class="btn light" id="st-new" type="button" hidden>Yangi buyurtma</button>
+  </div>
+</aside>
+
+<div class="chekwrap" id="chekwrap" hidden>
+  <div class="chek" role="dialog" aria-label="Chek">
+    <div class="ikat" style="height:14px" aria-hidden="true"></div>
+    <div class="chek-in">
+      <div class="chek-head"><b>Pazanda</b><span>Farg'ona viloyati, Uchko'prik tumani</span><span>+998 94 324 83 08</span></div>
+      <div class="chek-meta" id="chek-meta"></div>
+      <table id="chek-rows"></table>
+      <div class="chek-total"><span>Jami</span><b id="chek-sum"></b></div>
+      <p class="chek-ok">Buyurtmangiz qabul qilindi. Rahmat!</p>
+      <div class="chek-actions noprint">
+        <button class="btn" id="chek-print" type="button">Chop etish / PDF</button>
+        <button class="btn light" id="chek-close" type="button">Yopish</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const raw = {
+  "Sho'rvalar": `Mastava|Guruchli quyuq sho'rva|32
+Mol go'shtli sho'rva|Kartoshka, sabzi, ko'katli|36*
+Qo'y go'shtli sho'rva|Suyakli, to'yimli|42
+Tovuq sho'rva|Yengil, uy tovug'idan|30
+Chuchvara sho'rva|Go'shtli mayda chuchvara|34*
+Mashxo'rda|Mosh va guruchli sho'rva|30
+Moshkichiri|Mosh va guruch, qatiq bilan|28
+Kartoshka sho'rva|Go'shtli, ukropli|28
+Qovoqli sho'rva|Yumshoq, qaymoqli|26
+Yasmiq sho'rva|Qizil yasmiqdan|24
+Nohat sho'rva|Go'shtli nohatli|32
+Qaynatma sho'rva|Katta go'sht bo'lagi bilan|40
+Baliq sho'rva|Laqqa baliqdan|38
+Zamburug'li sho'rva|Qo'ziqorin va qaymoq|30
+Pomidorli sho'rva|Achchiq, ziravorli|26
+Dumba sho'rva|Dumbali, sabzavotli|38
+Ugra oshi|Uyda cho'zilgan xamirli sho'rva|34
+Shivit oshi|Ko'k xamirli, qatiq bilan|36`,
+  "Osh va palovlar": `To'y oshi|Sabzi, guruch, mol go'shti, bedana tuxumi|58*
+Samarqand oshi|Nohat, mayiz, sarimsoq bilan|60*
+Farg'ona oshi|Yumshoq, yog'i kam|56
+Xorazm oshi|Qo'y go'shti, ko'p sabzi|58
+Bayram oshi|Tuxum va ko'katlar bilan|65
+Qazili osh|Qazi (ot go'shti kolbasasi) bilan|72
+Qo'y go'shtli osh|Dumba bilan|62
+Tovuqli osh|Yengil variant|48
+Oq osh|Sarimsoqli, yengil|44
+Yashil osh|Mosh bilan|42
+Dum osh|Bug'da pishgan palov|50
+Sabzavotli osh|Go'shtsiz|36
+Bedana oshi|Bedana go'shti bilan|64
+Ot go'shtli osh|Qazi bilan|68
+Baliqli osh|Baliq go'shti bilan|54
+Osh to'plami|Osh, patir, salat|70
+Katta porsiya osh|Ikki kishilik|110
+Kichik porsiya osh|Bolalar uchun|30`,
+  "Lag'mon va xamir taomlari": `Lag'mon|Qo'lda cho'zilgan xamir, qovurma sho'rva|42*
+Qovurma lag'mon|Sabzavot bilan qovurilgan|44
+Suyuq lag'mon|Sho'rvali|40
+Gulxan lag'mon|Pomidor va qalampirli|44
+Uyg'ur lag'moni|Achchiq, ziravorli|46
+Go'shtli manti|5 dona|36*
+Qovoqli manti|5 dona|30
+Kartoshkali manti|5 dona|28
+Chuchvara qovurma|Go'shtli, 15 dona|34
+Chuchvara qatiq bilan|Qaynatilgan, 15 dona|32
+Xonim|Sabzavotli rulet|34
+Norin|Ot go'shtli, yupqa xamir|66
+Beshbarmoq|Go'sht va xamir|68
+Mampar|Qalin sho'rvali xamir|36
+Pelmeni|Go'shtli, 10 dona|32
+Chebureki|Go'shtli, 2 dona|22
+Belyash|Go'shtli, 1 dona|12
+Qatlama|Qatlamali xamir|16
+Tuxum-barak|Tuxumli chuchvara, 12 dona|32
+Xamir kesma|Go'shtli sho'rva bilan|30`,
+  "Shashlik va kabob": `Qo'y go'shti shashlik|Ko'mirda, 2 sixd|48*
+Mol go'shti shashlik|Yumshoq, 2 sixd|46
+Jigar kabob|Dumba bilan, 2 sixd|40*
+Tovuq kabob|Marinadlangan, 2 sixd|34
+Lyulya kabob|Qiyma, ziravorli, 2 sixd|38*
+Qovurg'a kabob|Qo'y qovurg'asi, 300 g|62
+Dumba kabob|Yog'li, tuzlangan|36
+Yurak kabob|Qo'y yuragi, 2 sixd|34
+Kuy kabob|Katta bo'lakli|52
+Tovuq qanoti|Achchiq, 5 dona|36
+Tovuq son|Ko'mirda, 1 dona|30
+Baliq kabob|Laqqa baliqdan|58
+Sabzavotli kabob|Baqlajon, pomidor, qalampir|26
+Qo'ziqorin kabob|Ko'mirda|24
+Kartoshka kabob|Xushbo'y|18
+Pishloqli qiyma kabob|Eritilgan pishloq bilan|42
+Ot go'shti kabob|Ko'mirda, 2 sixd|54
+Assorti kabob|Besh xil go'sht|120
+Katta kabob to'plami|4 kishilik|220
+Qozon kabob|Qozonda pishgan|48`,
+  "Tandir va non": `Go'shtli samsa|Tandirdan, 1 dona|14*
+Qovoqli samsa|Yumshoq, 1 dona|11
+Kartoshkali samsa|Tandirdan|10
+Tovuqli samsa|Tandirdan|13
+Pishloqli samsa|Eritilgan pishloq bilan|12
+Ko'katli samsa|Ko'k piyoz, ismaloq|9
+Jizzali samsa|Dumba, piyoz|16
+Qatlama samsa|Qatlamali xamir|14
+Patir non|Issiq, 1 dona|9*
+Obi non|Katta, 1 dona|7
+Kulcha|Sutli, 1 dona|8
+Gijduvon non|Yog'li|10
+Tandir go'sht|Sekin pishirilgan, 300 g|65*
+Tandir tovuq|Butun, 1 dona|85
+Tandir qovurg'a|Qo'y qovurg'asi|72
+Tandir jigar|Dumbali|44
+Tandir kartoshka|Ziravorli|22
+Tandir baliq|Butun baliq|90`,
+  "Qozon va kosa taomlari": `Dimlama|Go'sht va sabzavot, qozonda|46*
+Kartoshkali go'sht|Qozonda qovurilgan|44
+Jiz-biz|Qo'y go'shtli qovurma|52
+Qovurdoq|Kartoshkali|50
+Do'lma|Uzum bargida, go'sht bilan|38*
+Baqlajon do'lma|Qiymali|36
+Sabzavotli ragu|Go'shtli|34
+Bifshteks|Mol go'shti|62
+Kotlet|Qiymali, 2 dona|30
+Jarkop|Kartoshka va go'sht|46
+Qovurma|Mol go'shti|48
+Tovuq qovurma|Sarimsoqli|38
+Tovuq tabaka|Butun tovuq|68
+Go'sht rulet|Qiyma va tuxum|44
+Baliq qovurma|Laqqa baliqdan|56
+Kartoshka fri|Qovurilgan|16
+Guruch|Sariyog'li|10
+Grechka|Go'shtli|20
+Mol tili|Qaynatilgan|58
+Kalla-pocha|Qaynatma|45`,
+  "Salat va gazaklar": `Achchiq-chuchuk|Pomidor, piyoz, bodring|14*
+Toshkent salati|Redis, mol go'shti, qaymoq|28
+Bahor salati|Bodring va ko'katlar|16
+Olivye|Klassik|22
+Vinegret|Lavlagi, sabzi|18
+Grek salati|Pishloq, zaytun|26
+Sezar|Tovuq, krutonlar|32
+Qorako'z salati|Baqlajon, pomidor|22
+Karam salati|Yangi karam|12
+Sabzi salati|Koreyscha|16
+Tuzlangan bodring|Uy tuzlamasi|10
+Tuzlama|Pomidor, bodring|14
+Pishloq likopchasi|Brinza, suluguni|30
+Kolbasa assorti|Ot va mol go'shtidan|36
+Zaytun to'plami|Bir porsiya|14
+Qaymoq va asal|Mehmonlar uchun|18
+Mevalar likopchasi|Mavsumiy|40*
+Ko'katlar likopchasi|Rayhon, kashnich, shivit|8`,
+  "Ichimlik va shirinlik": `Ko'k choy|Choynak|12*
+Qora choy|Choynak|12
+Limonli choy|Choynak|16
+Sutli choy|Qatiq bilan|14
+Kofe|Qora yoki sutli|18
+Mevali kompot|Uy sharoitida, 1 l|20
+Limonad|Yangi, 0,5 l|18
+Ayron|Sovuq, 0,5 l|10
+Sharbat|Anor yoki olma, 0,3 l|16
+Mineral suv|0,5 l|6
+Kola|0,5 l|10
+Chak-chak|Asal bilan|18*
+Halva|Yong'oqli|16
+Pishirilgan olma|Asal va yong'oq bilan|20
+Paxlava|Asal, yong'oq|22
+Muzqaymoq|Vanilli, 3 sharik|18
+Qaymoqli tort|Bir bo'lak|24
+Nishalda|Qand va yong'oq bilan|20`
+};
+
+/* ====== TELEGRAM BOT SOZLAMASI ======
+   1) BOT_TOKEN: @BotFather bergan token
+   2) CHAT_ID: buyurtmalar keladigan chat raqami */
+const BOT_TOKEN = "9186522096:AAG4VWJ4aSkLmaDF0ssWSLMqSSE8cEyOi3s";
+const CHAT_ID   = "8807783366";
+/* ==================================== */
+
+const $ = id => document.getElementById(id);
+const data = {}, byId = {};
+let nextId = 0;
+for (const c in raw) data[c] = raw[c].trim().split('\n').map(l => {
+  const [n,d,p] = l.split('|');
+  const it = [n, d, parseInt(p)*1000, p.endsWith('*'), nextId++];
+  byId[it[4]] = it; return it;
+});
+const fmt = n => n.toLocaleString('ru-RU').replace(/ /g,' ') + " so'm";
+const tabs = $('tabs'), list = $('menu-list'), q = $('q');
+$('total').textContent = Object.values(data).flat().length;
+let current = Object.keys(data)[0];
+
+function render(items){
+  list.innerHTML = items.length ? items.map(([n,d,p,hit,id]) =>
+    `<li><div class="row"><span>${n}${hit?'<em class="hit">Xit</em>':''}</span><i></i><b>${fmt(p)}</b></div>
+     <div class="meta"><small>${d}</small><button class="add" type="button" data-id="${id}" aria-label="${n} savatga qo'shish">+ Savatga</button></div></li>`).join('')
+    : '<li>Hech narsa topilmadi. Boshqa nom bilan qidirib ko\'ring.</li>';
+}
+function show(cat){
+  current = cat; q.value = '';
+  [...tabs.children].forEach(b => b.setAttribute('aria-selected', b.dataset.cat === cat));
+  render(data[cat]);
+}
+Object.keys(data).forEach(cat => {
+  const b = document.createElement('button');
+  b.className='tab'; b.type='button'; b.setAttribute('role','tab'); b.dataset.cat = cat;
+  b.textContent = cat + ' (' + data[cat].length + ')';
+  b.onclick = () => show(cat);
+  tabs.appendChild(b);
+});
+q.addEventListener('input', () => {
+  const v = q.value.trim().toLowerCase();
+  if(!v){ show(current); return; }
+  [...tabs.children].forEach(b => b.setAttribute('aria-selected','false'));
+  render(Object.values(data).flat().filter(i => (i[0]+' '+i[1]).toLowerCase().includes(v)));
+});
+
+/* ---- Savat ---- */
+let cart = {};
+try { cart = JSON.parse(localStorage.getItem('pz_cart') || '{}'); } catch(_) { cart = {}; }
+Object.keys(cart).forEach(k => { if(!byId[k]) delete cart[k]; });
+const saveCart = () => { try { localStorage.setItem('pz_cart', JSON.stringify(cart)); } catch(_) {} };
+const count = () => Object.values(cart).reduce((a,b) => a+b, 0);
+const sum = () => Object.entries(cart).reduce((s,[id,n]) => s + byId[id][2]*n, 0);
+function drawCart(){
+  $('cnt').textContent = count();
+  $('ctotal').textContent = fmt(sum());
+  $('clist').innerHTML = count() ? Object.entries(cart).map(([id,n]) =>
+    `<li><div><b>${byId[id][0]}</b><br><small>${fmt(byId[id][2])}</small></div>
+     <div class="qty"><button type="button" data-id="${id}" data-d="-1" aria-label="Kamaytirish">−</button><span>${n}</span><button type="button" data-id="${id}" data-d="1" aria-label="Ko'paytirish">+</button></div></li>`).join('')
+    : '<li class="empty">Savat bo\'sh. Menyudan taom tanlang.</li>';
+}
+function change(id, d){
+  cart[id] = (cart[id]||0) + d;
+  if(cart[id] <= 0) delete cart[id];
+  saveCart(); drawCart();
+}
+list.addEventListener('click', e => {
+  const b = e.target.closest('.add'); if(!b) return;
+  change(b.dataset.id, 1);
+  b.textContent = "Qo'shildi ✓";
+  setTimeout(() => { b.textContent = '+ Savatga'; }, 900);
+});
+$('clist').addEventListener('click', e => {
+  const b = e.target.closest('button'); if(b) change(b.dataset.id, +b.dataset.d);
+});
+function openCart(o){
+  $('drawer').classList.toggle('open', o);
+  $('scrim').classList.toggle('open', o);
+  $('drawer').setAttribute('aria-hidden', String(!o));
+  if(o) $('dclose').focus();
+}
+$('cartbtn').onclick = () => openCart(true);
+$('dclose').onclick = $('scrim').onclick = () => openCart(false);
+document.addEventListener('keydown', e => { if(e.key === 'Escape') openCart(false); });
+
+/* ---- Telegram ---- */
+const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const stamp = () => new Date().toLocaleString('ru-RU', {timeZone:'Asia/Tashkent'});
+async function tg(method, params){
+  if(BOT_TOKEN.startsWith('BU_YERGA') || CHAT_ID.startsWith('BU_YERGA')) throw new Error('config');
+  const res = await fetch('https://api.telegram.org/bot' + BOT_TOKEN + '/' + method, {method:'POST', body:new URLSearchParams(params)});
+  const j = await res.json().catch(() => ({}));
+  if(!res.ok || !j.ok) throw new Error(j.description || ('HTTP ' + res.status));
+  return j.result;
+}
+function explain(err){
+  const m = (err && err.message) || '';
+  if(m === 'config') return "Bot hali ulanmagan: fayl boshidagi BOT_TOKEN va CHAT_ID ni to'ldiring.";
+  if(/unauthorized|not found/i.test(m) && !/chat/i.test(m)) return "Bot tokeni noto'g'ri. BOT_TOKEN ni tekshiring.";
+  if(/chat not found|initiate|blocked|deactivated/i.test(m)) return "Bot sizga yoza olmayapti. Telegramda @pazanda_001_bot ga kirib Start bosing va CHAT_ID to'g'riligini tekshiring.";
+  if(/failed to fetch|networkerror|load failed/i.test(m)) return "Telegramga ulanib bo'lmadi. Internetni tekshiring (VPN yoki filtr bo'lsa o'chirib ko'ring) va faylni brauzerda qayta oching.";
+  return "Yuborib bo'lmadi: " + m;
+}
+function wire(form, msg, okText, build, done){
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    msg.className = 'msg';
+    let text;
+    try { text = build(new FormData(form)); }
+    catch(err){ msg.textContent = err.message; msg.className = 'msg bad'; return; }
+    const btn = form.querySelector('button[type=submit]'), old = btn.textContent;
+    btn.disabled = true; btn.textContent = 'Yuborilmoqda...';
+    try {
+      await tg('sendMessage', {chat_id:CHAT_ID, text, parse_mode:'HTML'});
+      msg.textContent = okText; msg.className = 'msg good'; done();
+    } catch(err){ msg.textContent = explain(err); msg.className = 'msg bad'; }
+    finally { btn.disabled = false; btn.textContent = old; }
+  });
+}
+wire($('bron'), $('ok'), "Rahmat! So'rovingiz qabul qilindi, tez orada qo'ng'iroq qilamiz.", f =>
+  ['📅 <b>Joy band qilish</b>', '', '👤 ' + esc(f.get('ism')), '📞 ' + esc(f.get('tel')),
+   '🗓 ' + esc(f.get('kun')), '👥 ' + esc(f.get('soni')), '', '🕒 ' + stamp()].join('\n'),
+  () => $('bron').reset());
+
+/* ---- Buyurtma: yuborish, tasdiq kutish, chek ---- */
+const WAIT_MS = 60*60*1000;
+let pending = null, pollTimer = null, polling = false;
+try { pending = JSON.parse(localStorage.getItem('pz_pending') || 'null'); } catch(_) { pending = null; }
+const savePending = () => { try { pending ? localStorage.setItem('pz_pending', JSON.stringify(pending)) : localStorage.removeItem('pz_pending'); } catch(_) {} };
+
+function orderText(o){
+  const lines = o.items.map(([n,q,sm],i) => `${i+1}. ${esc(n)} × ${q} = ${fmt(sm)}`);
+  return ['🧾 <b>Yangi buyurtma № ' + o.id + '</b>', '', '👤 ' + esc(o.ism), '📞 ' + esc(o.tel), '🚚 ' + esc(o.tur),
+    o.man ? '📍 ' + esc(o.man) : null, o.izoh ? '💬 ' + esc(o.izoh) : null, '', ...lines, '',
+    '💰 <b>Jami: ' + fmt(o.total) + '</b>', '🕒 ' + o.time].filter(x => x !== null).join('\n');
+}
+function showStatus(kind, o){
+  $('cartbox').hidden = true; $('status').hidden = false;
+  const T = {
+    wait:['Buyurtma yuborildi', `№ ${o.id}. Restoran tasdiqlashini kutyapmiz. Sahifani yopmang: tasdiqlangach chek shu yerda chiqadi.`],
+    ok:['Buyurtma qabul qilindi', `№ ${o.id}. Chekingiz tayyor.`],
+    no:['Buyurtma bekor qilindi', `№ ${o.id}. Afsuski, restoran buyurtmani qabul qila olmadi. Savol bo'lsa +998 94 324 83 08 raqamiga qo'ng'iroq qiling.`],
+    timeout:['Javob kelmadi', `№ ${o.id}. Restoran hali javob bermadi. +998 94 324 83 08 raqamiga qo'ng'iroq qilib so'rang.`]
+  }[kind];
+  $('st-title').textContent = T[0]; $('st-text').textContent = T[1];
+  $('st-receipt').hidden = kind !== 'ok';
+  $('st-new').hidden = kind === 'wait';
+  $('st-receipt').onclick = () => showReceipt(o);
+}
+function showReceipt(o){
+  $('chek-meta').innerHTML =
+    `<div><span>Chek №</span><b>${esc(o.id)}</b></div><div><span>Sana</span><span>${esc(o.time)}</span></div>` +
+    `<div><span>Mijoz</span><span>${esc(o.ism)}</span></div><div><span>Telefon</span><span>${esc(o.tel)}</span></div>` +
+    `<div><span>Turi</span><span>${esc(o.tur)}</span></div>` + (o.man ? `<div><span>Manzil</span><span>${esc(o.man)}</span></div>` : '');
+  $('chek-rows').innerHTML = o.items.map(([n,q,sm]) => `<tr><td>${esc(n)} × ${q}</td><td>${fmt(sm)}</td></tr>`).join('');
+  $('chek-sum').textContent = fmt(o.total);
+  $('chekwrap').hidden = false;
+}
+$('chek-close').onclick = () => { $('chekwrap').hidden = true; };
+$('chek-print').onclick = () => window.print();
+$('st-new').onclick = () => { $('status').hidden = true; $('cartbox').hidden = false; $('omsg').className = 'msg'; };
+
+function stopPolling(){ if(pollTimer){ clearInterval(pollTimer); pollTimer = null; } }
+function startPolling(){ stopPolling(); pollTimer = setInterval(poll, 3000); poll(); }
+async function settle(kind, o, cq){
+  stopPolling(); pending = null; savePending();
+  if(cq){
+    tg('answerCallbackQuery', {callback_query_id:cq.id, text: kind === 'ok' ? 'Qabul qilindi' : 'Bekor qilindi'}).catch(() => {});
+    const tail = kind === 'ok' ? '\n\n✅ <b>QABUL QILINDI</b> · ' + stamp() : '\n\n❌ <b>BEKOR QILINDI</b> · ' + stamp();
+    tg('editMessageText', {chat_id:CHAT_ID, message_id:cq.message.message_id, text:orderText(o) + tail,
+      parse_mode:'HTML', reply_markup:JSON.stringify({inline_keyboard:[]})}).catch(() => {});
+  }
+  showStatus(kind, o);
+  if(kind === 'ok') showReceipt(o); else openCart(true);
+}
+async function poll(){
+  const o = pending;
+  if(!o){ stopPolling(); return; }
+  if(Date.now() - o.ts > WAIT_MS){ settle('timeout', o); return; }
+  if(polling) return;
+  polling = true;
+  try {
+    const ups = await tg('getUpdates', {allowed_updates:JSON.stringify(['callback_query']), timeout:0, limit:100});
+    for(const u of ups){
+      const cq = u.callback_query; if(!cq || !cq.data) continue;
+      const [act, id] = cq.data.split(':');
+      if(id !== o.id) continue;
+      if(act === 'ok' || act === 'no'){ await settle(act, o, cq); return; }
+    }
+  } catch(_) { /* keyingi urinishda qayta tekshiriladi */ }
+  finally { polling = false; }
+}
+
+$('order').addEventListener('submit', async e => {
+  e.preventDefault();
+  const msg = $('omsg'), f = new FormData($('order'));
+  msg.className = 'msg';
+  const bad = t => { msg.textContent = t; msg.className = 'msg bad'; };
+  if(!count()) return bad("Savat bo'sh. Avval menyudan taom tanlang.");
+  const tur = f.get('tur'), man = (f.get('manzil')||'').trim();
+  if(tur === 'Yetkazib berish' && !man) return bad("Yetkazib berish uchun manzilni yozing.");
+  const o = {
+    id:'P-' + Date.now().toString(36).slice(-5).toUpperCase(), ts:Date.now(), time:stamp(),
+    ism:f.get('ism'), tel:f.get('tel'), tur, man, izoh:(f.get('izoh')||'').trim(),
+    items:Object.entries(cart).map(([id,n]) => [byId[id][0], n, byId[id][2]*n]), total:sum()
+  };
+  const btn = $('order').querySelector('button[type=submit]'), old = btn.textContent;
+  btn.disabled = true; btn.textContent = 'Yuborilmoqda...';
+  try {
+    await tg('sendMessage', {chat_id:CHAT_ID, text:orderText(o), parse_mode:'HTML',
+      reply_markup:JSON.stringify({inline_keyboard:[[
+        {text:'✅ Qabul qilish', callback_data:'ok:' + o.id},
+        {text:'❌ Bekor qilish', callback_data:'no:' + o.id}]]})});
+    pending = o; savePending();
+    cart = {}; saveCart(); drawCart(); $('order').reset();
+    showStatus('wait', o); startPolling();
+  } catch(err){ bad(explain(err)); }
+  finally { btn.disabled = false; btn.textContent = old; }
+});
+
+if(pending){ showStatus('wait', pending); startPolling(); }
+if(location.hash === '#test'){
+  tg('sendMessage', {chat_id:CHAT_ID, text:'✅ Pazanda sayti botga ulandi.'})
+    .then(() => alert('Bot ulandi! Telegramni tekshiring, xabar kelgan bo\'lishi kerak.'))
+    .catch(err => alert(explain(err)));
+}
+
+show(current);
+drawCart();
+</script>
+</body>
+</html>
